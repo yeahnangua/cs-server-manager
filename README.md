@@ -1,6 +1,8 @@
 # CS Server Manager
 
-一个基于 Electron + Vue 3 的 Counter-Strike 2 服务器管理工具，提供图形化界面来管理和监控 CS2 专用服务器。
+一个基于 Electron + Vue 3 的 Counter-Strike 2/GO 服务器管理工具，提供图形化界面来管理和监控 CS2/GO 专用服务器
+
+- 这篇README是AI写的，看起来可能有些奇怪，但是使用方法是正确的。
 
 ## 🚀 功能特性
 
@@ -12,50 +14,42 @@
 - 🔌 **插件管理** - 服务器插件的安装、启用和禁用
 - 📈 **数据统计** - 服务器运行数据和统计信息
 
-### 界面特性
-- 🎨 现代化的 Ant Design Vue UI 组件
-- 🌈 渐变色主题设计
-- 📱 响应式布局
-- 🔄 平滑的页面切换动画
-- 🪟 自定义窗口控制（最小化、最大化、关闭）
-
 ## 🛠️ 技术栈
 
 ### 前端
-- **Vue 3** - 渐进式 JavaScript 框架
-- **Vue Router 4** - 官方路由管理器
+- **Vue 3**
+- **Vue Router 4**
 - **Ant Design Vue 4** - 企业级 UI 组件库
-- **ECharts 5** - 数据可视化图表库
-- **Vite 7** - 现代化构建工具
+~~- **ECharts 5** - 数据可视化图表库~~后期用于数据统计页面，暂未完工
+- **Vite 7**
 
 ### 桌面端
-- **Electron 37** - 跨平台桌面应用框架
-- **Electron Builder** - 应用打包和分发
+- **Electron 37**
+- **Electron Builder**
 
 ### 后端功能
-- **Node.js** - 服务器端 JavaScript 运行时
-- **RCON** - 远程控制台连接
-- **文件系统操作** - 配置文件和日志管理
-- **进程管理** - CS2 服务器进程控制
+- **Node.js**
+- **RCON** - 连接游戏控制台
+- **操作系统文件** - 配置文件、日志、插件等管理
+- **进程管理** - 游戏服务器进程控制
 
-### 其他工具
-- **Python 脚本** - 辅助功能和实时控制台
+### 其他库
 - **ADM-ZIP** - 压缩文件处理
-- **Axios** - HTTP 客户端
+~~- **Axios** - HTTP 客户端~~这个用不到，但是在package.json里面，我懒得删
 
 ## 📦 安装和使用
 
 ### 环境要求
 - Node.js 16+ 
 - npm 或 yarn
-- Counter-Strike 2 游戏文件
-- Windows 操作系统（推荐）
+- Counter-Strike 2 完整游戏
+- Windows 10+
 
 ### 安装步骤
 
 1. **克隆项目**
 ```bash
-git clone https://github.com/your-username/cs-server-manger.git
+git clone https://github.com/ctcakes/cs-server-manger.git
 cd cs-server-manger
 ```
 
@@ -83,9 +77,7 @@ yarn electron:build
 ### 首次配置
 
 1. 启动应用后，进入 **设置** 页面
-2. 配置 CS2 游戏路径（通常在 Steam 安装目录下）
-3. 设置服务器数据存储路径
-4. 保存配置并重启应用
+2. 配置 CS2 游戏路径
 
 ## 🎮 使用指南
 
@@ -96,9 +88,9 @@ yarn electron:build
    - 地图选择
    - 游戏模式
    - 最大玩家数
-   - 端口设置
-3. 配置高级选项（可选）
-4. 点击 "创建" 完成服务器创建
+   - 端口
+   - 绑定IP
+3. 点击 "创建" 完成服务器创建
 
 ### 管理服务器
 - **启动/停止** - 一键启动或停止服务器
@@ -118,7 +110,7 @@ yarn electron:build
 - 查看已安装插件列表
 - 启用/禁用插件
 - 删除插件
-- 下载新插件
+- 下载新插件(暂时只支持CS2 Ess哦 后续更新)
 - 打开插件目录
 
 ## 📁 项目结构
@@ -158,21 +150,21 @@ cs-server-manger/
 ```
 
 ### 服务器配置 (`~/.cssm/server.json`)
-服务器列表和配置信息存储在此文件中，包含每个服务器的详细参数设置。
+服务器列表和配置信息存储在此文件中，包含每个服务器的详细参数设置。不建议手动修改。
+
+### 插件功能实现
+由于此项目初衷是一机多服，所以做了一些资源调度，但是实现方法很笨，不要骂我！！o(╥﹏╥)o(~~至少能用~~)
 
 ## 🔧 开发说明
 
 ### 可用脚本
-- `npm run dev` - 启动 Vite 开发服务器
-- `npm run build` - 构建前端代码
-- `npm run electron:dev` - 启动 Electron 开发模式
-- `npm run electron:build` - 构建 Electron 应用
-- `npm run preview` - 预览构建结果
+- `npm run dev` - 启动dev服务器(不需要加electron:前缀)
+- `npm run build` - 打包前端代码
+- `npm run electron:build` - 打包前端&Electron 应用
 
 ### 开发环境
 - 使用 Vite 进行快速热重载开发
 - Electron 开发工具集成
-- Vue DevTools 支持
 
 ## 🐛 常见问题
 
@@ -184,21 +176,18 @@ A: 请检查：
 4. 管理员权限
 
 ### Q: 控制台没有输出？
-A: 请确认：
-1. 服务器已正常启动
-2. 日志文件权限
-3. 路径配置正确
+A：由于~~傻逼~~控制台捕捉方法的问题，通过此项目开启的服务器黑窗里不会有输出，想看输出请在对应服务器控制台查看~
 
 ### Q: 插件无法加载？
 A: 检查：
 1. 插件文件完整性
 2. 插件兼容性
 3. 服务器配置
+4. IQ
 
 ## 🤝 贡献
 
-欢迎提交 Issue 和 Pull Request！
-
+~~不~~欢迎提交 Issue 和 Pull Request！
 1. Fork 本项目
 2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
 3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
@@ -216,10 +205,11 @@ A: 检查：
 ## 🙏 致谢
 
 - Counter-Strike 2 社区
+- [来自 hvh.gg 的 CS2 Ess插件](https://hvh.gg/plugins/cs2)
 - Vue.js 团队
 - Electron 团队
 - Ant Design Vue 团队
 
 ---
 
-⭐ 如果这个项目对你有帮助，请给它一个星标！
+⭐ 如果这个项目对你有帮助，请给它一个star！
